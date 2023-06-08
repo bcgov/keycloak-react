@@ -1,0 +1,27 @@
+{
+  "name": "bcgov-keycloak-react",
+  "version": "1.0.0-alpha.1",
+  "description": "BCGov Pathfinder SSO Keycloak integration for React",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "keywords": [
+    "bcgov",
+    "keycloak",
+    "sso",
+    "single sign on",
+    "pathfinder",
+    "redhat"
+  ],
+  "author": "Brady Mitchell <braden.mitchell@gov.bc.ca>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "react": "18.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BradyMitch/bcgov-keycloak-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BradyMitch/bcgov-keycloak-react/issues"
+  }
+}
