@@ -1,5 +1,5 @@
 {
-  "name": "bcgov-keycloak-react",
+  "name": "@bcgov/keycloak-react",
   "version": "1.0.0-alpha.1",
   "description": "BCGov Pathfinder SSO Keycloak integration for React",
   "main": "src/index.js",
@@ -19,9 +19,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BradyMitch/bcgov-keycloak-react.git"
+    "url": "git+https://github.com/bcgov/keycloak-react.git"
   },
   "bugs": {
-    "url": "https://github.com/BradyMitch/bcgov-keycloak-react/issues"
+    "url": "https://github.com/bcgov/keycloak-react/issues"
   }
 }
