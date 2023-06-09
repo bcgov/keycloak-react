@@ -10,7 +10,8 @@
     "sso",
     "single sign on",
     "pathfinder",
-    "redhat"
+    "redhat",
+    "react"
   ],
   "author": "Brady Mitchell <braden.mitchell@gov.bc.ca>",
   "license": "Apache-2.0",
