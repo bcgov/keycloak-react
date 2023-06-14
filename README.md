@@ -1,6 +1,7 @@
 # BCGov SSO Keycloak Frontend Integration
 
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](<Redirect-URL>)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 For React:18 on NodeJS:18
 
