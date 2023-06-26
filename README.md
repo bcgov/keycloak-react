@@ -29,7 +29,7 @@
 1. Add the following line to your frontend `package.json` under `"dependencies":`:
 
 ```JSON
-"@bcgov/keycloak-react": "https://github.com/bcgov/keycloak-react/releases/download/v1.0.0-alpha.1/bcgov-keycloak-react-1.0.0-alpha.1.tgz",
+"@bcgov/keycloak-react": "https://github.com/bcgov/keycloak-react/releases/download/v1.0.0-alpha.1/bcgov-keycloak-react.tgz",
 ```
 
 2. Add import `import { KeycloakProvider } from '@bcgov/keycloak-react';` to `main.tsx` file or wherever the `createRoot()` function is. Wrap `<KeycloakProvider>` component around the Router or Routes like shown below:
