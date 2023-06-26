@@ -1,13 +1,11 @@
 # BCGov SSO Keycloak Frontend Integration
 
-[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](<Redirect-URL>)
+[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](Redirect-URL)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 [![NodeJS](https://img.shields.io/badge/Node.js_18-43853D?style=for-the-badge&logo=node.js&logoColor=white)](NodeJS)
 [![Typescript](https://img.shields.io/badge/TypeScript_5-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](Typescript)
 [![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](React)
-
-**DOCUMENTATION NEEDS TO BE UPDATED**
 
 <br />
 
@@ -22,6 +20,7 @@
 
 - For React:18 on NodeJS:18
 - For Keycloak Gold Standard.
+- Works with Vanilla JavaScript or Typescript 5.
 
 ## Getting Started with the Integration
 
