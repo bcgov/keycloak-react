@@ -15,27 +15,66 @@
 
 - [General Information](#general-information)
 - [Getting Started with the Integration](#getting-started-with-the-integration)
+- [Module Exports](#module-exports)
 
 ## General Information
 
 - For React:18 on NodeJS:18
 - For Keycloak Gold Standard.
 - Works with Vanilla JavaScript or Typescript 5.
+- Currenly requires a proxy pass to the api with `/api`.
 
 ## Getting Started with the Integration
 
-1. Place `keycloak/` directory in the `src/` directory.
-2. Add import `import { KeycloakProvider } from 'keycloak';` to `main.tsx` file.
-3. Wrap `<KeycloakProvider>` component around the AppRouter.
-4. Add import `import { KeycloakWrapper } from 'keycloak';` to `AppRouter.tsx` file.
-5. Wrap `<KeycloakWrapper>` around Routes inside of Router.
-6. Use the following example to implement a login and logout button.
+1. Add the following line to your frontend `package.json` under `"dependencies":`:
+
+```JSON
+"@bcgov/keycloak-react": "https://github.com/bcgov/keycloak-react/releases/download/v1.0.0-alpha.1/bcgov-keycloak-react-1.0.0-alpha.1.tgz",
+```
+
+2. Add import `import { KeycloakProvider } from '@bcgov/keycloak-react';` to `main.tsx` file or wherever the `createRoot()` function is. Wrap `<KeycloakProvider>` component around the Router or Routes like shown below:
 
 ```JavaScript
-// Example uses a proxy for API connection.
-// Integration will differ without a proxy.
+import { KeycloakProvider } from '@bcgov/keycloak-react';
+import { ThemeProvider } from '@mui/material';
+import AppRouter from 'AppRouter';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import theme from 'theme';
 
-import { useAuthService } from 'keycloak';
+const root = createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <KeycloakProvider>
+      <ThemeProvider theme={theme}>
+        <AppRouter />
+      </ThemeProvider>
+    </KeycloakProvider>
+  </React.StrictMode>,
+);
+```
+
+3. Add import `import { KeycloakWrapper } from '@bcgov/keycloak-react';` to `AppRouter.tsx` file or wherever your routes are defined. Wrap `<KeycloakWrapper>` around Routes inside of Router like this example using `react-router-dom`:
+
+```JavaScript
+<Router>
+  <KeycloakWrapper>
+    <Header />
+    <Routes>
+      <Route
+        path="/"
+        element={<h1>Home</h1>}
+      />
+    </Routes>
+    <Footer />
+  </KeycloakWrapper>
+</Router>
+```
+
+4. Use the following example to implement a login and logout button.
+
+```JavaScript
+import { useAuthService } from '@bcgov/keycloak-react';
 
 const HomePage = () => {
   const { state: authState, getLoginURL, getLogoutURL } = useAuthService();
@@ -60,7 +99,8 @@ const HomePage = () => {
 
 <br />
 
-Example authState.userInfo object:
+For all user properties reference: https://github.com/bcgov/sso-keycloak/wiki/Identity-Provider-Attribute-Mapping  
+Example IDIR authState.userInfo object:
 
 ```JSON
 {
@@ -75,4 +115,37 @@ Example authState.userInfo object:
   "email": "john.doe@gov.bc.ca",
   "client_roles": ["admin"]
 }
+```
+
+<br />
+
+## Module Exports
+
+These are the functions and types exported by the `@bcgov/keycloak-react` module.
+
+```JavaScript
+import {
+  KeycloakWrapper, // Provides the login and refresh token functionality.
+  KeycloakProvider, // Provides state management for Keycloak.
+  useAuthState, // See below for usage.
+  AuthContext, // Shouldn't need to be used in your code.
+} from '@bcgov/keycloak-react';
+
+// Use the useAuthState() hook within a React component:
+const {
+  state, // Access the current user with state.userInfo
+  getLoginURL, // Returns the login route.
+  getLogoutURL, // Returns the logout route.
+  hasRole, // Pass a role in the form of a string to tell if the user has the given client_role.
+  setUserInfo, // Shouldn't need to be used in your code.
+  refreshAccessToken, // Shouldn't need to be used in your code.
+} = useAuthService();
+
+// Typescript Types - these shouldn't need to be used in your code.
+import {
+  AuthStateWithDispatch,
+  AuthActionType,
+  AuthState,
+  AuthAction,
+} from '@bcgov/keycloak-react';
 ```
