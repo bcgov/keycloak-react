@@ -100,7 +100,7 @@ const HomePage = () => {
 <br />
 
 For all user properties reference: https://github.com/bcgov/sso-keycloak/wiki/Identity-Provider-Attribute-Mapping  
-Example IDIR authState.userInfo object:
+Example IDIR `state.userInfo` object:
 
 ```JSON
 {
