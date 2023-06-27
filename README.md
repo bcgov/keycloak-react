@@ -37,7 +37,7 @@
 2. Add import `import { KeycloakProvider } from '@bcgov/keycloak-react';` to `main.tsx` file or wherever the `createRoot()` function is. Wrap `<KeycloakProvider>` component around the Router or Routes like shown below:
 
 ```JavaScript
-import { KeycloakProvider } from '@bcgov/keycloak-react';
+import { KeycloakProvider } from '@bcgov/keycloak-react'; // <--------------------------------------
 import { ThemeProvider } from '@mui/material';
 import AppRouter from 'AppRouter';
 import React from 'react';
@@ -47,11 +47,11 @@ import theme from 'theme';
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <KeycloakProvider>
+    <KeycloakProvider> // <--------------------------------------
       <ThemeProvider theme={theme}>
         <AppRouter />
       </ThemeProvider>
-    </KeycloakProvider>
+    </KeycloakProvider> // <--------------------------------------
   </React.StrictMode>,
 );
 ```
@@ -60,7 +60,7 @@ root.render(
 
 ```JavaScript
 <Router>
-  <KeycloakWrapper>
+  <KeycloakWrapper> // <--------------------------------------
     <Header />
     <Routes>
       <Route
@@ -69,19 +69,19 @@ root.render(
       />
     </Routes>
     <Footer />
-  </KeycloakWrapper>
+  </KeycloakWrapper> // <--------------------------------------
 </Router>
 ```
 
 4. Use the following example to implement a login and logout button.
 
 ```JavaScript
-import { useAuthService } from '@bcgov/keycloak-react';
+import { useAuthService } from '@bcgov/keycloak-react'; 
 
 const HomePage = () => {
   // state is aliased as authState
-  const { state: authState, getLoginURL, getLogoutURL } = useAuthService();
-  const user = authState.userInfo;
+  const { state: authState, getLoginURL, getLogoutURL } = useAuthService(); 
+  const user = authState.userInfo; 
 
   return (
     <>
