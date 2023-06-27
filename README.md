@@ -12,8 +12,9 @@
 ## Table of Contents
 
 - [General Information](#general-information)
-- [Getting Started with the Integration](#getting-started-with-the-integration)
-- [Module Exports](#module-exports)
+- [Getting Started with the Integration](#getting-started-with-the-integration) - Start Here!
+- [Module Exports](#module-exports) - Functions and Types available from the module.
+- [Authentication Flow](#authentication-flow) - How it works from login button click.
 
 ## General Information
 
@@ -22,6 +23,8 @@
 - Works with Vanilla JavaScript or Typescript 5.
 - Currenly requires a proxy pass to the api with `/api`.
 - For use with [@bcgov/keycloak-express]
+
+<br />
 
 ## Getting Started with the Integration
 
@@ -76,6 +79,7 @@ root.render(
 import { useAuthService } from '@bcgov/keycloak-react';
 
 const HomePage = () => {
+  // state is aliased as authState
   const { state: authState, getLoginURL, getLogoutURL } = useAuthService();
   const user = authState.userInfo;
 
@@ -98,7 +102,7 @@ const HomePage = () => {
 
 <br />
 
-For all user properties reference: https://github.com/bcgov/sso-keycloak/wiki/Identity-Provider-Attribute-Mapping  
+For all user properties reference [SSO Keycloak Wiki - Identity Provider Attribute Mapping].  
 Example IDIR `state.userInfo` object:
 
 ```JSON
@@ -115,6 +119,8 @@ Example IDIR `state.userInfo` object:
   "client_roles": ["admin"]
 }
 ```
+
+[Return to Top](#bcgov-sso-keycloak-frontend-integration)
 
 <br />
 
@@ -149,6 +155,43 @@ import {
 } from '@bcgov/keycloak-react';
 ```
 
+[Return to Top](#bcgov-sso-keycloak-frontend-integration)
+
+<br/>
+
+## Authentication Flow
+
+The Keycloak Authentication system begins when the user visits the frontend application.
+
+1. The user visits the frontend of the application. Here, the `KeycloakWrapper` component initializes and checks the URL for a query parameter named `token`.
+
+- If the `token` query parameter is found:
+
+  - The component strips the URL of the access token.
+  - The user's information is set into the state using the token.
+  - The user can now access the frontend of the application.
+
+- If the `token` query parameter is not found, the component checks if the user is logged in by using the refresh token to get a new access token by communicating with the `/api/oauth/token` endpoint.
+  - If the refresh token exists and is valid, the user can now access the frontend of the application without seeing the login button, as their session is authenticated through the refresh token.
+  - If the refresh token doesn't exist or is invalid, the login button is displayed.
+
+2. When the user clicks the login button, they are routed to the `/api/oauth/login` endpoint via a proxy pass, which then redirects them to the Keycloak login page.
+
+3. Upon successful login at the Keycloak login page, Keycloak redirects the user to the `/oauth/login/callback` endpoint.
+
+4. The authentication code returned by the callback endpoint is used to retrieve the access token and the refresh token for the user.
+
+5. The user is redirected back to the frontend with the access token included as a `token` query parameter and the refresh token set as an httpOnly cookie.
+
+6. The `KeycloakWrapper` component re-initiates and the process repeats from step 1, this time with the `token` query parameter available.
+
+<img width="100%" src="https://github.com/bcgov/keycloak-react/assets/16313579/08c5d42a-b08a-46db-9e13-157417b6df3c">
+
+[Return to Top](#bcgov-sso-keycloak-frontend-integration)
+
 <!-- Link References -->
 
+[access token]: https://auth0.com/docs/secure/tokens/access-tokens
+[refresh token]: https://developer.okta.com/docs/guides/refresh-tokens/main/
 [@bcgov/keycloak-express]: https://github.com/bcgov/keycloak-express
+[SSO Keycloak Wiki - Identity Provider Attribute Mapping]: https://github.com/bcgov/sso-keycloak/wiki/Identity-Provider-Attribute-Mapping
