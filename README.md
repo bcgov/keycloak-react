@@ -9,8 +9,6 @@
 
 <br />
 
-<img src="https://user-images.githubusercontent.com/16313579/224582406-c5f9491b-00be-4889-a4fe-b18987ec1e4c.png">
-
 ## Table of Contents
 
 - [General Information](#general-information)
@@ -23,6 +21,7 @@
 - For Keycloak Gold Standard.
 - Works with Vanilla JavaScript or Typescript 5.
 - Currenly requires a proxy pass to the api with `/api`.
+- For use with [@bcgov/keycloak-express]
 
 ## Getting Started with the Integration
 
@@ -149,3 +148,7 @@ import {
   AuthAction,
 } from '@bcgov/keycloak-react';
 ```
+
+<!-- Link References -->
+
+[@bcgov/keycloak-express]: https://github.com/bcgov/keycloak-express
