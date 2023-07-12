@@ -1,6 +1,6 @@
-import { Context, Dispatch, ReactNode } from 'react';
+import { Context, Dispatch, ReactNode } from "react";
 
-import { AuthAction, AuthState } from './service';
+import { AuthAction, AuthState } from "./service";
 
 // PROPS
 interface KeycloakProviderProps {
@@ -19,8 +19,12 @@ export interface AuthStateWithDispatch extends AuthState {
 export declare const AuthContext: Context<AuthState>;
 
 // FUNCTIONS
-export declare function KeycloakProvider(props: KeycloakProviderProps): JSX.Element;
-export declare function KeycloakWrapper(props: KeycloakWrapperProps): JSX.Element;
+export declare function KeycloakProvider(
+  props: KeycloakProviderProps
+): JSX.Element;
+export declare function KeycloakWrapper(
+  props: KeycloakWrapperProps
+): JSX.Element;
 
 // Exported types from ./service
-export { AuthAction, AuthState, AuthActionType, useAuthService } from './service';
+export { AuthAction, AuthState, AuthActionType, useKeycloak } from "./service";

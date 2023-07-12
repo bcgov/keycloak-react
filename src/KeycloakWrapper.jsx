@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import useAuthService from './service/useAuthService';
+import useKeycloak from "./service/useKeycloak";
 
 export const KeycloakWrapper = (props) => {
   const { children } = props;
-  const { setUserInfo, refreshAccessToken } = useAuthService();
+  const { setUserInfo, refreshAccessToken } = useKeycloak();
 
   useEffect(() => {
     // Get the current URL and its search parameters
     const url = new URL(window.location.href);
     const searchParams = url.searchParams;
-    const token = searchParams.get('token');
+    const token = searchParams.get("token");
 
     if (token) {
       setUserInfo(token);
-      searchParams.delete('token');
+      searchParams.delete("token");
       // Create a new URL with the updated search parameters
       const newUrl = `${url.origin}${url.pathname}${searchParams.toString()}`;
-      window.history.pushState({}, '', newUrl);
+      window.history.pushState({}, "", newUrl);
     } else {
       // If there is no token in the URL, try to refresh the access token
       refreshAccessToken();

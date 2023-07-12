@@ -76,11 +76,11 @@ root.render(
 4. Use the following example to implement a login and logout button.
 
 ```JavaScript
-import { useAuthService } from '@bcgov/keycloak-react';
+import { useKeycloak } from '@bcgov/keycloak-react';
 
 const HomePage = () => {
   // state is aliased as authState
-  const { state: authState, getLoginURL, getLogoutURL } = useAuthService();
+  const { state: authState, getLoginURL, getLogoutURL } = useKeycloak();
   const user = authState.userInfo;
 
   return (
@@ -132,19 +132,20 @@ These are the functions and types exported by the `@bcgov/keycloak-react` module
 import {
   KeycloakWrapper, // Provides the login and refresh token functionality.
   KeycloakProvider, // Provides state management for Keycloak.
-  useAuthState, // See below for usage.
+  useKeycloak, // See below for usage.
   AuthContext, // Shouldn't need to be used in your code.
 } from '@bcgov/keycloak-react';
 
-// Use the useAuthState() hook within a React component:
+// Use the useKeycloak() hook within a React component:
 const {
   state, // Access the current user with state.userInfo
   getLoginURL, // Returns the login route.
   getLogoutURL, // Returns the logout route.
+  getAuthorizationHeader, // Returns the value for the 'Authorization' header when making requests to protected endpoints.
   hasRole, // Pass a role in the form of a string to tell if the user has the given client_role.
   setUserInfo, // Shouldn't need to be used in your code.
   refreshAccessToken, // Shouldn't need to be used in your code.
-} = useAuthService();
+} = useKeycloak(backendURL?: string); // (optional) Default's to '/api'.
 
 // Typescript Types - these shouldn't need to be used in your code.
 import {
