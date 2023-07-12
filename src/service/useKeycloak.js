@@ -2,7 +2,7 @@ import { useContext, useMemo } from "react";
 
 import { AuthContext } from "../KeycloakProvider";
 import decodeJWT from "../utils/decodeJWT";
-import { AuthActionType } from ".";
+import { AuthActionType } from "./index.d.ts";
 
 const { SET_TOKEN } = AuthActionType;
 
