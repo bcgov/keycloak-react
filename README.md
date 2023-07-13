@@ -12,7 +12,7 @@
 ## Table of Contents
 
 - [General Information](#general-information)
-- [Getting Started with the Integration](#getting-started-with-the-integration) - Start Here!
+- [Getting Started with the Integration](#getting-started-with-the-integration) - **Start Here!**
 - [Module Exports](#module-exports) - Functions and Types available from the module.
 - [Authentication Flow](#authentication-flow) - How it works from login button click.
 
@@ -78,7 +78,7 @@ root.render(
 </Router>
 ```
 
-**NOTE**: _KeycloakWrapper has optional property `backendURL` (string), defaults to '/api'._
+> **Note**: _KeycloakWrapper has optional property `backendURL` (string), defaults to '/api'._
 
 <br />
 
@@ -109,7 +109,7 @@ const HomePage = () => {
 };
 ```
 
-**NOTE**: _getLoginURL and getLogoutURL have optional param 'backendURL' (string), defaults to '/api'._
+> **Note**: _getLoginURL and getLogoutURL have optional param 'backendURL' (string), defaults to '/api'._
 
 <br />
 
