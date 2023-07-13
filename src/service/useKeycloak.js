@@ -17,10 +17,10 @@ export const useKeycloak = () => {
 
   // Use useMemo to memoize the returned object and prevent unnecessary re-renders.
   return useMemo(() => {
-    const getLoginURL = (backendURL = "/api") =>
-      new URL(backendURL, "/oauth/login");
-    const getLogoutURL = (backendURL = "/api") =>
-      new URL(backendURL, "/oauth/logout");
+    const getLoginURL = (backendURL) =>
+      new URL(backendURL ?? "/api", "/oauth/login");
+    const getLogoutURL = (backendURL) =>
+      new URL(backendURL ?? "/api", "/oauth/logout");
 
     // Return Authorization Header for Keycloak requests.
     const getAuthorizationHeader = () => `Bearer ${state.accessToken}`;
@@ -39,8 +39,8 @@ export const useKeycloak = () => {
       state.userInfo?.client_roles?.includes(role) ?? false;
 
     // Get a new access token using the refresh token.
-    const refreshAccessToken = async (backendURL = "/api") => {
-      const fetchURL = new URL(backendURL, "/oauth/token");
+    const refreshAccessToken = async (backendURL) => {
+      const fetchURL = new URL(backendURL ?? "/api", "/oauth/token");
 
       try {
         const response = await fetch(fetchURL, {
