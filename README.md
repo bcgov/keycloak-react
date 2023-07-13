@@ -12,7 +12,7 @@
 ## Table of Contents
 
 - [General Information](#general-information)
-- [Getting Started with the Integration](#getting-started-with-the-integration) - Start Here!
+- [Getting Started with the Integration](#getting-started-with-the-integration) - **Start Here!**
 - [Module Exports](#module-exports) - Functions and Types available from the module.
 - [Authentication Flow](#authentication-flow) - How it works from login button click.
 
@@ -21,7 +21,8 @@
 - For React:18 on NodeJS:18
 - For Keycloak Gold Standard.
 - Works with Vanilla JavaScript or Typescript 5.
-- Currenly requires a proxy pass to the api with `/api`.
+- **BY DEFUALT**, set to work with a proxy pass to the backend using `/api`.
+- **To use without a proxy pass**, refer to the notes in the setup documentation below regarding optional parameters and property of `getLoginURL`, `getLogoutURL`, and `KeycloakWrapper`.
 - For use with [@bcgov/keycloak-express]
 
 <br />
@@ -33,6 +34,8 @@
 ```JSON
 "@bcgov/keycloak-react": "https://github.com/bcgov/keycloak-react/releases/download/v1.0.0-alpha.1/bcgov-keycloak-react.tgz",
 ```
+
+<br />
 
 2. Add import `import { KeycloakProvider } from '@bcgov/keycloak-react';` to `main.tsx` file or wherever the `createRoot()` function is. Wrap `<KeycloakProvider>` component around the Router or Routes like shown below:
 
@@ -56,6 +59,8 @@ root.render(
 );
 ```
 
+<br />
+
 3. Add import `import { KeycloakWrapper } from '@bcgov/keycloak-react';` to `AppRouter.tsx` file or wherever your routes are defined. Wrap `<KeycloakWrapper>` around Routes inside of Router like this example using `react-router-dom`:
 
 ```JavaScript
@@ -73,15 +78,19 @@ root.render(
 </Router>
 ```
 
+> **Note**: _KeycloakWrapper has optional property `backendURL` (string), defaults to '/api'._
+
+<br />
+
 4. Use the following example to implement a login and logout button.
 
 ```JavaScript
-import { useAuthService } from '@bcgov/keycloak-react'; 
+import { useKeycloak } from '@bcgov/keycloak-react';
 
 const HomePage = () => {
   // state is aliased as authState
-  const { state: authState, getLoginURL, getLogoutURL } = useAuthService(); 
-  const user = authState.userInfo; 
+  const { state: authState, getLoginURL, getLogoutURL } = useKeycloak();
+  const user = authState.userInfo;
 
   return (
     <>
@@ -99,6 +108,8 @@ const HomePage = () => {
   );
 };
 ```
+
+> **Note**: _getLoginURL and getLogoutURL have optional param 'backendURL' (string), defaults to '/api'._
 
 <br />
 
@@ -132,19 +143,20 @@ These are the functions and types exported by the `@bcgov/keycloak-react` module
 import {
   KeycloakWrapper, // Provides the login and refresh token functionality.
   KeycloakProvider, // Provides state management for Keycloak.
-  useAuthState, // See below for usage.
+  useKeycloak, // See below for usage.
   AuthContext, // Shouldn't need to be used in your code.
 } from '@bcgov/keycloak-react';
 
-// Use the useAuthState() hook within a React component:
+// Use the useKeycloak() hook within a React component:
 const {
   state, // Access the current user with state.userInfo
-  getLoginURL, // Returns the login route.
-  getLogoutURL, // Returns the logout route.
+  getLoginURL, // Returns the login route. Optional param 'backendURL' (string).
+  getLogoutURL, // Returns the logout route. Optional param 'backendURL' (string).
+  getAuthorizationHeader, // Returns the value for the 'Authorization' header when making requests to protected endpoints.
   hasRole, // Pass a role in the form of a string to tell if the user has the given client_role.
   setUserInfo, // Shouldn't need to be used in your code.
-  refreshAccessToken, // Shouldn't need to be used in your code.
-} = useAuthService();
+  refreshAccessToken, // Shouldn't need to be used in your code. Optional property 'backendURL' (string).
+} = useKeycloak();
 
 // Typescript Types - these shouldn't need to be used in your code.
 import {

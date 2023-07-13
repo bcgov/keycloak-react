@@ -11,14 +11,17 @@ const { SET_TOKEN } = AuthActionType;
  * @returns {Object} - An object containing authentication-related functions
  * and the current authentication state.
  */
-export const useAuthService = () => {
+export const useKeycloak = () => {
   // Get the authentication state and dispatch function from the authentication context.
   const { state, dispatch } = useContext(AuthContext);
 
   // Use useMemo to memoize the returned object and prevent unnecessary re-renders.
   return useMemo(() => {
-    const getLoginURL = () => "/api/oauth/login";
-    const getLogoutURL = () => "/api/oauth/logout";
+    const getLoginURL = (backendURL) => `${backendURL ?? "/api"}/oauth/login`;
+    const getLogoutURL = (backendURL) => `${backendURL ?? "/api"}/oauth/logout`;
+
+    // Return Authorization Header for Keycloak requests.
+    const getAuthorizationHeader = () => `Bearer ${state.accessToken}`;
 
     // Sets the user information in the authentication state using a JWT token.
     const setUserInfo = (token) => {
@@ -34,25 +37,33 @@ export const useAuthService = () => {
       state.userInfo?.client_roles?.includes(role) ?? false;
 
     // Get a new access token using the refresh token.
-    const refreshAccessToken = async () => {
-      const response = await fetch("/api/oauth/token", {
-        method: "POST",
-        credentials: "include",
-      });
+    const refreshAccessToken = async (backendURL) => {
+      const fetchURL = `${backendURL ?? "/api"}/oauth/token`;
 
-      if (response.ok) {
-        const { access_token } = await response.json();
-        const decodedToken = decodeJWT(access_token);
-        dispatch({
-          type: SET_TOKEN,
-          payload: { accessToken: access_token, userInfo: decodedToken },
+      try {
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
         });
+
+        if (response.ok) {
+          const { access_token } = await response.json();
+          const decodedToken = decodeJWT(access_token);
+          dispatch({
+            type: SET_TOKEN,
+            payload: { accessToken: access_token, userInfo: decodedToken },
+          });
+        }
+      } catch (error) {
+        // Log error.
+        console.error("@bcgov/keycloak-react, refreshAccessToken error", error);
       }
     };
 
     return {
       getLoginURL,
       getLogoutURL,
+      getAuthorizationHeader,
       setUserInfo,
       refreshAccessToken,
       hasRole,
@@ -61,4 +72,4 @@ export const useAuthService = () => {
   }, [state]);
 };
 
-export default useAuthService;
+export default useKeycloak;
