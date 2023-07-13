@@ -11,14 +11,16 @@ const { SET_TOKEN } = AuthActionType;
  * @returns {Object} - An object containing authentication-related functions
  * and the current authentication state.
  */
-export const useKeycloak = (backendURL = "/api") => {
+export const useKeycloak = () => {
   // Get the authentication state and dispatch function from the authentication context.
   const { state, dispatch } = useContext(AuthContext);
 
   // Use useMemo to memoize the returned object and prevent unnecessary re-renders.
   return useMemo(() => {
-    const getLoginURL = () => new URL(backendURL, "/oauth/login");
-    const getLogoutURL = () => new URL(backendURL, "/oauth/logout");
+    const getLoginURL = (backendURL = "/api") =>
+      new URL(backendURL, "/oauth/login");
+    const getLogoutURL = (backendURL = "/api") =>
+      new URL(backendURL, "/oauth/logout");
 
     // Return Authorization Header for Keycloak requests.
     const getAuthorizationHeader = () => `Bearer ${state.accessToken}`;
@@ -37,7 +39,7 @@ export const useKeycloak = (backendURL = "/api") => {
       state.userInfo?.client_roles?.includes(role) ?? false;
 
     // Get a new access token using the refresh token.
-    const refreshAccessToken = async () => {
+    const refreshAccessToken = async (backendURL = "/api") => {
       const fetchURL = new URL(backendURL, "/oauth/token");
 
       try {

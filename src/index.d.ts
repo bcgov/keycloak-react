@@ -8,6 +8,7 @@ interface KeycloakProviderProps {
 }
 interface KeycloakWrapperProps {
   children: ReactNode;
+  backendURL?: string;
 }
 
 // Interface that extends the AuthState interface and adds a dispatch function.

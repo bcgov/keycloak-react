@@ -21,7 +21,8 @@
 - For React:18 on NodeJS:18
 - For Keycloak Gold Standard.
 - Works with Vanilla JavaScript or Typescript 5.
-- Currenly requires a proxy pass to the api with `/api`.
+- **BY DEFUALT**, set to work with a proxy pass to the backend using `/api`.
+- **To use without a proxy pass**, refer to the notes in the setup documentation below regarding optional parameters and property of `getLoginURL`, `getLogoutURL`, and `KeycloakWrapper`.
 - For use with [@bcgov/keycloak-express]
 
 <br />
@@ -33,6 +34,8 @@
 ```JSON
 "@bcgov/keycloak-react": "https://github.com/bcgov/keycloak-react/releases/download/v1.0.0-alpha.1/bcgov-keycloak-react.tgz",
 ```
+
+<br />
 
 2. Add import `import { KeycloakProvider } from '@bcgov/keycloak-react';` to `main.tsx` file or wherever the `createRoot()` function is. Wrap `<KeycloakProvider>` component around the Router or Routes like shown below:
 
@@ -56,6 +59,8 @@ root.render(
 );
 ```
 
+<br />
+
 3. Add import `import { KeycloakWrapper } from '@bcgov/keycloak-react';` to `AppRouter.tsx` file or wherever your routes are defined. Wrap `<KeycloakWrapper>` around Routes inside of Router like this example using `react-router-dom`:
 
 ```JavaScript
@@ -72,6 +77,10 @@ root.render(
   </KeycloakWrapper> // <--------------------------------------
 </Router>
 ```
+
+**NOTE**: _KeycloakWrapper has optional property `backendURL` (string), defaults to '/api'._
+
+<br />
 
 4. Use the following example to implement a login and logout button.
 
@@ -99,6 +108,8 @@ const HomePage = () => {
   );
 };
 ```
+
+**NOTE**: _getLoginURL and getLogoutURL have optional param 'backendURL' (string), defaults to '/api'._
 
 <br />
 
@@ -139,13 +150,13 @@ import {
 // Use the useKeycloak() hook within a React component:
 const {
   state, // Access the current user with state.userInfo
-  getLoginURL, // Returns the login route.
-  getLogoutURL, // Returns the logout route.
+  getLoginURL, // Returns the login route. Optional param 'backendURL' (string).
+  getLogoutURL, // Returns the logout route. Optional param 'backendURL' (string).
   getAuthorizationHeader, // Returns the value for the 'Authorization' header when making requests to protected endpoints.
   hasRole, // Pass a role in the form of a string to tell if the user has the given client_role.
   setUserInfo, // Shouldn't need to be used in your code.
-  refreshAccessToken, // Shouldn't need to be used in your code.
-} = useKeycloak(backendURL?: string); // (optional) Default's to '/api'.
+  refreshAccessToken, // Shouldn't need to be used in your code. Optional property 'backendURL' (string).
+} = useKeycloak();
 
 // Typescript Types - these shouldn't need to be used in your code.
 import {

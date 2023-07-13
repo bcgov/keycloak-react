@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import useKeycloak from "./service/useKeycloak";
 
 export const KeycloakWrapper = (props) => {
-  const { children } = props;
+  const { children, backendURL } = props;
   const { setUserInfo, refreshAccessToken } = useKeycloak();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const KeycloakWrapper = (props) => {
       window.history.pushState({}, "", newUrl);
     } else {
       // If there is no token in the URL, try to refresh the access token
-      refreshAccessToken();
+      refreshAccessToken(backendURL);
     }
   }, []);
 

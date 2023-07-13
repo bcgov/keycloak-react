@@ -7,12 +7,12 @@ export enum AuthActionType {
 
 declare interface AuthService {
   state: AuthState;
-  getLoginURL: () => string;
-  getLogoutURL: () => string;
+  getLoginURL: (backendURL?: string) => string;
+  getLogoutURL: (backendURL?: string) => string;
   getAuthorizationHeader: () => string;
   setUserInfo: (token: string) => void;
   hasRole: (role: string) => boolean;
-  refreshAccessToken: () => Promise<void>;
+  refreshAccessToken: (backendURL?: string) => Promise<void>;
 }
 
 export declare interface AuthState {
@@ -28,5 +28,5 @@ export declare interface AuthAction {
 declare const initialState: AuthState;
 
 // FUNCTIONS
-export declare function useKeycloak(backendURL: string): AuthService;
+export declare function useKeycloak(): AuthService;
 declare function reducer(state: AuthState, action: AuthAction): AuthState;
